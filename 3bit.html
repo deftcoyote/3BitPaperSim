@@ -1,0 +1,202 @@
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<script type="text/javascript" src="3BCem.js"></script>
+<script type="text/javascript" src="3BCasm.js"></script>
+<script type="text/javascript">
+
+function ResetAll()
+{
+    a = ["000"];
+    T3BC.Load(a);
+    UpdatePage();
+}
+function LoadProgram()                     
+{
+    a =[];
+    compyfrm = document.forms['3bcf'];
+    a.push(compyfrm.elements["in000"].value);
+    a.push(compyfrm.elements["in001"].value);
+    a.push(compyfrm.elements["in010"].value);
+    a.push(compyfrm.elements["in011"].value);
+    a.push(compyfrm.elements["in100"].value);
+    a.push(compyfrm.elements["in101"].value);
+    a.push(compyfrm.elements["in110"].value);
+    a.push(compyfrm.elements["in111"].value);
+    T3BC.Load(a);
+    UpdatePage();
+}
+function StepProgram()
+{
+    compyfrm = document.forms['3bcf'];
+    if(T3BC.IOF == true)
+    { T3BC.IO = compyfrm.elements["IO"].value;
+    }
+    T3BC.Clock();
+    UpdatePage();
+}
+function UpdatePage()
+{
+    compyfrm = document.forms['3bcf'];
+    compyfrm.elements["ACC"].value = T3BC.ACC;
+    c = T3BC.PC.toString(2);
+    //pad up to 3 bits
+    while(c.length < 3)
+        { c = "0" + c;}
+    compyfrm.elements["PC"].value = c;//num to string
+    compyfrm.elements["IR"].value = T3BC.IR;
+    compyfrm.elements["AR"].value = T3BC.AR;
+    //set flag
+    compyfrm.elements["OF"].checked = false;
+    if(T3BC.OF == true)
+    {compyfrm.elements["OF"].checked = true;}
+
+    compyfrm.elements["IO"].value = T3BC.IO;
+    //set flag
+    compyfrm.elements["IOF"].checked = false;
+    if(T3BC.IOF == true)
+    {compyfrm.elements["IOF"].checked = true;}
+    //memory
+    compyfrm.elements["in000"].value = T3BC.Memory[0];
+    compyfrm.elements["in001"].value = T3BC.Memory[1];
+    compyfrm.elements["in010"].value = T3BC.Memory[2];
+    compyfrm.elements["in011"].value = T3BC.Memory[3];
+    compyfrm.elements["in100"].value = T3BC.Memory[4];
+    compyfrm.elements["in101"].value = T3BC.Memory[5];
+    compyfrm.elements["in110"].value = T3BC.Memory[6];
+    compyfrm.elements["in111"].value = T3BC.Memory[7];
+    
+}
+function ToggleIO()
+{
+    compyfrm = document.forms['3bcf']; 
+    if(compyfrm.elements["IOF"].checked == true)
+    {
+        T3BC.IOF = true;
+    }
+    else
+    {
+        T3BC.IOF = false;
+    }
+}
+</script>
+
+<style>
+body {
+    /*background-image: url('3bclogop.png');
+    background-repeat: no-repeat;
+    background-size:50%;*/
+    background-color:#eee;
+}
+#mem{
+    width:100px;
+    background-color:#ffffff;   
+    border-style:solid;
+    border-width:1px;
+}             
+#memarea{       
+    width:150px;
+    height:400px;
+    float:left; 
+    border-width:1px;
+    border-style:solid;
+    margin: 10px;
+    padding: 5px;
+}      
+#cpuarea{   
+    width:150px;
+    height:400px;
+    float:left; 
+    border-width:1px;
+    border-style:solid;
+    margin: 10px;
+    padding: 5px;
+}
+#controlarea{   
+    width:150px;
+    height:400px;
+    float:left; 
+    border-width:1px;
+    border-style:solid;
+    margin: 10px;
+    padding: 5px;
+}
+#progarea{
+    float:none;
+    clear:both;
+    width: 513px;
+    border-width:1px;
+    border-style:solid;
+    margin: 10px;
+    padding: 5px;
+}
+
+</style>
+
+</head>
+
+<body>
+<!--<div>
+<table valign="middle">
+    <tr><td><img src="3bclogop.png" height="60px"></td>
+    <td>The 3-Bit Computer</td>
+    <td><img src="3bclogop.png" height="60px"></td>
+    </tr>
+</table>
+</div>-->
+<img src="3bclogop.png" height="60px" > <span style="display:inline-block;margin-top:-50px;padding-left:30px;">The 3-Bit Computer</span>
+<form name="3bcf" action="#">
+<div id="memarea">  
+<h3>Memory</h3>
+<table id="mem">
+    <tr><td>000</td><td><input name="in000" type="text" value="000" size="3"></td></tr>
+    <tr><td>001</td><td><input name="in001" type="text" value="000" size="3"></td></tr>
+    <tr><td>010</td><td><input name="in010" type="text" value="000" size="3"></td></tr>
+    <tr><td>011</td><td><input name="in011" type="text" value="000" size="3"></td></tr>
+    <tr><td>100</td><td><input name="in100" type="text" value="000" size="3"></td></tr>
+    <tr><td>101</td><td><input name="in101" type="text" value="000" size="3"></td></tr>
+    <tr><td>110</td><td><input name="in110" type="text" value="000" size="3"></td></tr>
+    <tr><td>111</td><td><input name="in111" type="text" value="000" size="3"></td></tr>  
+</table>
+</div>       
+
+<div id="cpuarea">   
+<h3>CPU</h3>
+<table id="mem">
+    <tr><td>ACC</td><td><input name="ACC" type="text" value="000" size="3"></td></tr>
+    <tr><td>PC</td><td><input name="PC" type="text" value="000" size="3"></td></tr>
+    <tr><td>IR</td><td><input name="IR" type="text" value="000" size="3"></td></tr>
+    <tr><td>AR</td><td><input name="AR" type="text" value="000" size="3"></td></tr>
+    <tr><td>OF</td><td><input name="OF" type="checkbox" value="0" ></td></tr>
+    <tr><td>IO</td><td><input name="IO" type="text" value="000" size="3"></td></tr>
+    <tr><td>IOF</td><td><input name="IOF" type="checkbox" value="0" onclick="ToggleIO();"></td></tr>
+</table>
+</div>   
+
+<div id="controlarea">   
+<h3>Control Area</h3>
+<table>
+    <tr><td>Reset</td><td><input name="resetbtn" type="button" value="Reset" onclick="ResetAll();"></td></tr>
+    <tr><td>Load</td><td><input name="loadbtn" type="button" value="Load" onclick="LoadProgram();"></td></tr>
+    <tr><td>Step</td><td><input name="stepbtn" type="button" value="Step" onclick="StepProgram();"></td></tr>
+</table>
+</div>   
+<div style="clear: both;"></div>
+
+<div id="progarea">   
+Programming Area
+<p/>
+<!--<input name="loadbtn" type="button" value="Load">-->
+<textarea rows="20" cols="50" name="prog" id="prog">
+</textarea>
+</div>  
+
+</form>
+
+
+
+
+</body>
+</html>

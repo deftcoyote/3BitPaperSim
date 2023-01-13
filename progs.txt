@@ -1,0 +1,136 @@
+ld 1
+add 3
+
+
+011
+001
+001
+011
+000
+
+
+
+add two input #s and display
+io #iof=t
+st a
+io #iof=t
+add a
+io #iof=f
+a:
+000
+
+
+
+
+
+000
+101
+111
+000
+001
+111
+-----------------------------
+
+###doesn't fit
+add loop #s
+start:
+io #iof=t
+bz done
+add sum
+st sum
+b start
+sum: 000
+done: io
+
+
+000
+111
+111
+001
+110
+101
+110
+110
+000
+000
+000
+--------------------------
+#works
+add loop #s
+start:
+io #iof=t or f to finish
+add sum
+st sum
+b start
+sum: 000
+
+
+000
+001
+111
+101
+111
+110
+000
+000
+
+----------------------
+#is odd
+io #iof=t
+while:
+sub 1
+bo end
+sub 1
+b while
+end
+true
+x:001
+
+000 io
+010 sub
+111 1
+111 bo
+end end
+010
+111
+110
+001
+001
+========================
+
+multiply 2 #s
+ld x
+st sum
+ld y
+sub 1
+
+loop
+
+x:010
+y:011
+sum: 000
+
+aoeu
+
+
+========================
+count
+#assuming acc starts w/ 0
+loop:
+bo end
+io #iof=f
+add one
+b loop
+one:001
+end:
+
+
+111 
+111
+000
+001
+111
+110
+000
+001
+
